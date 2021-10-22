@@ -3,7 +3,7 @@ variable "bucket_name" {
     type        = string
 }
 
-variable "tags" {
+variable "bucket_tags" {
   description = "Custom tags"
   type        = map(string)
   default     = {}
@@ -106,46 +106,13 @@ variable "lifecycle_rules" {
 }
 
 
-variable "Name" {
-  default = "dev"
-}
-variable "Business_Unit" {
-  default = "s3 bucket"
-}
-variable "Business_Unit_Division" {
-  default = "kevin travers"
-}
-variable "Sub-BU_Division" {
-  default = "dev"
-}
-variable "Application" {
-  default = "s3 bucket"
-}
-variable "Financial_Owner_Name" {
-  default = "kevin travers"
-}
-variable "Financial_Owner_E-mail" {
-  default = "kevin travers"
-}
-variable "Technical_Team_Owner" {
-  default = "kevin travers"
-}
-
-variable "Technical_Owner_Name" {
-  default = "kevin travers"
-}
-variable "Technical_Owner_E-mail" {
-  default = "kevin travers"
-}
-variable "Service" {
-  default = "kevin travers"
-}
-variable "Category" {
-  default = "kevin travers"
-}
-variable "Stack" {
-  default = "kevin travers"
-}
 variable "region" {
   default = "us-east-1"
+}
+
+#maybe use object?
+variable "requried_tags" {
+  type    = map(string)
+  description = "Required tags"
+  
 }
