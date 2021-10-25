@@ -174,16 +174,4 @@ data "aws_iam_policy_document" "enforce_ssl" {
   }
 }
 
-data "aws_iam_policy_document" "custom_policy" {
-  statement {
-    sid    = "Allow logs access"
-    effect = "Allow"
-    principals {
-      type        = "Service"
-      identifiers = ["logs.us-east-1.amazonaws.com"]
-    }
-    actions   = ["s3:GetBucketAcl"]
-    resources = ["${aws_s3_bucket.bucket.arn}"]
-  }
-}
 
