@@ -120,5 +120,5 @@ variable "requried_tags" {
 
 variable "custom_policy" {
   description = "a custom policy that will be appened to the default policy"
-
+  default = null
 }
