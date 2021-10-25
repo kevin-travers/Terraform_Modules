@@ -120,6 +120,9 @@ resource "aws_s3_bucket" "bucket" {
 }
 // make bucket private
 resource "aws_s3_bucket_public_access_block" "block_access" {
+    depends_on = [
+    aws_s3_bucket.bucket
+  ]
     bucket                  = aws_s3_bucket.bucket.id
     block_public_acls       = true
     block_public_policy     = true
@@ -131,31 +134,56 @@ resource "aws_s3_bucket_public_access_block" "block_access" {
 // only allow ssl transport
 // https://aws.amazon.com/premiumsupport/knowledge-center/s3-bucket-policy-for-config-rule/
 resource "aws_s3_bucket_policy" "enforce_ssl" {
+  depends_on = [
+    aws_s3_bucket.bucket
+  ]
   bucket =  aws_s3_bucket.bucket.id
-  policy = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Id"     : "EnforceSSL",
-  "Statement": [
-    {
-      "Sid": "DenyInsecure",
-      "Effect": "Deny",
-      "Action": "s3:*",
-      "Principal": "*",
-      "Condition": {
-        "Bool": {
-          "aws:SecureTransport": "false"
-        },
-        "NumericLessThan": {
-          "s3:TlsVersion": 1.2
-        }
-      },
-      "Resource": [
-        "${aws_s3_bucket.bucket.arn}",
-        "${aws_s3_bucket.bucket.arn}/*"
+  policy = data.aws_iam_policy_document.enforce_ssl.json
+}
+data "aws_iam_policy_document" "enforce_ssl" {
+  source_json = var.custom_policy #data.aws_iam_policy_document.custom_policy.json
+  statement {
+    sid    = "DenyInsecure"
+    effect = "Deny"
+    principals {
+      type = "*"
+      identifiers = ["*"]
+    }
+    actions   = ["s3:*"]
+    resources = [
+      "${aws_s3_bucket.bucket.arn}",
+      "${aws_s3_bucket.bucket.arn}/*"
+    ]
+    condition  {
+      test     = "Bool"
+      variable = "aws:SecureTransport"
+
+      values = [
+        "false",
       ]
     }
-  ]
+
+    condition  {
+            test     = "NumericLessThan"
+      variable = "s3:TlsVersion"
+
+      values = [
+        1.2,
+      ]
+    }
+  }
 }
-POLICY
+
+data "aws_iam_policy_document" "custom_policy" {
+  statement {
+    sid    = "Allow logs access"
+    effect = "Allow"
+    principals {
+      type        = "Service"
+      identifiers = ["logs.us-east-1.amazonaws.com"]
+    }
+    actions   = ["s3:GetBucketAcl"]
+    resources = ["${aws_s3_bucket.bucket.arn}"]
+  }
 }
+
