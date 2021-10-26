@@ -7,18 +7,31 @@ variable "egress"{
 variable "ingress"{
     description = "(Optional) Configuration block for ingress rules. Can be specified multiple times for each ingress rule. Each ingress block supports fields documented below. This argument is processed in attribute-as-blocks mode."
 }
-variable "name_prefix"{
-    description = "(Optional, Forces new resource) Creates a unique name beginning with the specified prefix. Conflicts with name."
-}
-variable "name"{
+
+variable "security_group_name"{
     description = "Optional, Forces new resource) Name of the security group. If omitted, Terraform will assign a random, unique name."
 }
 variable "revoke_rules_on_delete"{
     description = "(Optional) Instruct Terraform to revoke all of the Security Groups attached ingress and egress rules before deleting the rule itself. This is normally not needed, however certain AWS services such as Elastic Map Reduce may automatically add required rules to security groups used with the service, and those rules may contain a cyclic dependency that prevent the security groups from being destroyed without removing the dependency first. Default false."
 }
-variable "tags"{
+variable "security_group_tags"{
     description = "(Optional) Map of tags to assign to the resource. If configured with a provider default_tags configuration block present, tags with matching keys will overwrite those defined at the provider-level."
 }
 variable "vpc_id"{
     description = "(Optional, Forces new resource) VPC ID."
+}
+
+variable "region" {
+  default = "us-east-1"
+}
+
+#maybe use object?
+variable "requried_tags" {
+  type    = map(string)
+  description = "Required tags"
+  
+}
+
+variable "create_before_destroy" {
+  default = false
 }
