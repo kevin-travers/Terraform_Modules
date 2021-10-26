@@ -66,8 +66,3 @@ variable "requried_tags" {
   
 }
 
-variable "create_before_destroy" {
-    type = bool
-    default = false
-    description = "if being replaced by terraform cretae replace first before deleteing if set to true"
-}

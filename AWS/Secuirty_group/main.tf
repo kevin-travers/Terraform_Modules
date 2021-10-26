@@ -25,9 +25,7 @@ resource "aws_security_group" "security_group" {
     revoke_rules_on_delete = var.revoke_rules_on_delete
     tags = var.security_group_tags
     vpc_id = var.vpc_id
-    lifecycle {
-        create_before_destroy = var.create_before_destroy
-    }
+  
     dynamic egress {
         for_each = var.egress_rule
         content{
