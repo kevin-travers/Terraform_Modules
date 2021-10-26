@@ -21,13 +21,13 @@ provider "aws" {
 
 resource "aws_security_group" "security_group" {
     description = var.description
-    name = var.security_group
+    name = var.security_group_name
     revoke_rules_on_delete = var.revoke_rules_on_delete
     tags = var.security_group_tags
     vpc_id = var.vpc_id
   
     dynamic egress {
-        for_each = var.egress_rule
+        for_each = var.egress_rules
         content{
             from_port = each.value.from_port
             to_port = each.value.to_port
@@ -41,7 +41,7 @@ resource "aws_security_group" "security_group" {
         }
     } 
     dynamic ingress{
-        for_each = var.ingress_rule
+        for_each = var.ingress_rules
         content{
             from_port = each.value.from_port
             to_port = each.value.to_port

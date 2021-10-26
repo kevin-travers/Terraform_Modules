@@ -3,7 +3,7 @@ variable "description"{
     default = ""
     type = string
 }
-variable "egress"{
+variable "egress_rules"{
     description = "Optional, VPC only) Configuration block for egress rules. Can be specified multiple times for each egress rule. Each egress block supports fields documented below. This argument is processed in attribute-as-blocks mode."
     type = list(object({
             from_port = number
@@ -18,7 +18,7 @@ variable "egress"{
     }))
     default     = []
 }
-variable "ingress"{
+variable "ingress_rules"{
     description = "(Optional) Configuration block for ingress rules. Can be specified multiple times for each ingress rule. Each ingress block supports fields documented below. This argument is processed in attribute-as-blocks mode."
     type = list(object({
             from_port = number
