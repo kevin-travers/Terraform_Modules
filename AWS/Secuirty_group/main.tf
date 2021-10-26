@@ -48,7 +48,7 @@ resource "aws_security_group" "security_group" {
             protocol = ingress.value.protocol
             cidr_blocks = ingress.value.cidr_blocks
             description = ingress.value.description
-            ipv6_cidr_blocks = eaingressch.value.ipv6_cidr_blocks
+            ipv6_cidr_blocks = ingress.value.ipv6_cidr_blocks
             prefix_list_ids = ingress.value.prefix_list_ids
             security_groups = ingress.value.security_groups
             self = ingress.value.self
