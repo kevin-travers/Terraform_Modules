@@ -29,7 +29,7 @@ resource "aws_security_group" "security_group" {
         create_before_destroy = var.create_before_destroy
     }
     dynamic egress {
-        for_each = var.ingress_rule
+        for_each = var.egress_rule
         content{
             from_port = each.value.from_port
             to_port = each.value.to_port
