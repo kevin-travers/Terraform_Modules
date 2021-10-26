@@ -43,15 +43,15 @@ resource "aws_security_group" "security_group" {
     dynamic ingress{
         for_each = var.ingress_rules
         content{
-            from_port = each.value.from_port
-            to_port = each.value.to_port
-            protocol = each.value.protocol
-            cidr_blocks = each.value.cidr_blocks
-            description = each.value.description
-            ipv6_cidr_blocks = each.value.ipv6_cidr_blocks
-            prefix_list_ids = each.value.prefix_list_ids
-            security_groups = each.value.security_groups
-            self = each.value.self
+            from_port = ingress.value.from_port
+            to_port = ingress.value.to_port
+            protocol = ingress.value.protocol
+            cidr_blocks = ingress.value.cidr_blocks
+            description = ingress.value.description
+            ipv6_cidr_blocks = eaingressch.value.ipv6_cidr_blocks
+            prefix_list_ids = ingress.value.prefix_list_ids
+            security_groups = ingress.value.security_groups
+            self = ingress.value.self
         }
     } 
 }
