@@ -21,15 +21,26 @@
 }
 
 resource "aws_alb" "alb"{
-  name               = var.alb_name
-  ip_address_type    = var.ip_address_type
-  load_balancer_type = var.load_balancer_type
-  internal           = var.internal
-  subnets            = var.subnet_ids
-  security_groups    = var.security_group_ids
-  tags               = var.tags
+    name                                = var.alb_name
+    internal                            = var.internal
+    load_balancer_type                  = var.load_balancer_type
+    security_groups                     = var.security_groups
+    drop_invalid_header_fields          = var.drop_invalid_header_fields                   
+    subnets                             = var.subnets
+    idle_timeout                        = var.idle_timeout
+    enable_deletion_protection          = var.enable_deletion_protection
+    enable_cross_zone_load_balancing    = var.enable_cross_zone_load_balancing
+    enable_http2                        = var.enable_http2
+    customer_owned_ipv4_pool            = var.customer_owned_ipv4_pool
+    ip_address_type                     = var.ip_address_type
+    tags                                = var.alb_tags
+
   access_logs {
-    bucket  = var.bucket
-    prefix  = var.prefix
+    bucket  = var.access_logs_bucket
+    prefix  = var.access_logs_prefix
     enabled = var.access_logs_enabled
   }
+
+}
+
+
