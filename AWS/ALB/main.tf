@@ -42,5 +42,3 @@ resource "aws_alb" "alb"{
   }
 
 }
-
-
