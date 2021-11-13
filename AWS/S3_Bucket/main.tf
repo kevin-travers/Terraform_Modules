@@ -135,7 +135,7 @@ resource "aws_s3_bucket_public_access_block" "block_access" {
 // https://aws.amazon.com/premiumsupport/knowledge-center/s3-bucket-policy-for-config-rule/
 resource "aws_s3_bucket_policy" "enforce_ssl" {
   depends_on = [
-    aws_s3_bucket.bucket
+    aws_s3_bucket_public_access_block.block_access
   ]
   bucket =  aws_s3_bucket.bucket.id
   policy = data.aws_iam_policy_document.enforce_ssl.json

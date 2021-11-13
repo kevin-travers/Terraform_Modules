@@ -108,6 +108,8 @@ variable "lifecycle_rules" {
 
 variable "region" {
   default = "us-east-1"
+  type = string
+  description = "resion to deploy to"
 }
 
 #maybe use object?
