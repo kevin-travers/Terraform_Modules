@@ -1,5 +1,6 @@
 provider "aws" {
     region  = var.region
+    profile = "personal"
      default_tags {
    tags = {
     "Name"                  = var.requried_tags.Name
